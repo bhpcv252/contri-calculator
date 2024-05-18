@@ -2,23 +2,29 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/bhpcv252/contri-calculator/calculation"
 	"github.com/bhpcv252/contri-calculator/person"
 )
 
 func main() {
-	fmt.Println("\n-----------------")
-	peopleCount := getIntInput("How many people are in the group? : ")
 
-	group := make([]person.Person, 0, peopleCount)
+	group := make([]person.Person, 0)
 
 	fmt.Println("\n-----------------")
-	fmt.Println("Enter people's name and initial contribution: (example: John 20) ")
+	fmt.Println("Enter people's name and initial contribution: (example: John 20). Leave empty to finish.")
 
-	for i := 0; i < peopleCount; i++ {
-		name, amount := getPersonInput("(Name Amount): ")
+	for {
+		name, amount, err := getPersonInput("(Name Amount): ")
+		if err != nil {
+			break
+		}
 		group = append(group, person.Person{Name: name, Amount: amount})
+	}
+
+	if len(group) == 0 {
+		log.Fatal("No people were entered.")
 	}
 
 	fmt.Println("\n-----------------")

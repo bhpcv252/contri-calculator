@@ -17,17 +17,6 @@ func getInput(prompt string) string {
 	return strings.TrimSpace(input)
 }
 
-func getIntInput(prompt string) int {
-	for {
-		input := getInput(prompt)
-		value, err := strconv.Atoi(input)
-		if err == nil {
-			return value
-		}
-		fmt.Println("Invalid input. Please Enter an integer.")
-	}
-}
-
 func getFloatInput(prompt string) float32 {
 	for {
 		input := getInput(prompt)
@@ -39,9 +28,12 @@ func getFloatInput(prompt string) float32 {
 	}
 }
 
-func getPersonInput(prompt string) (string, float32) {
+func getPersonInput(prompt string) (string, float32, error) {
 	for {
 		input := getInput(prompt)
+		if input == "" {
+			return "", 0, fmt.Errorf("end of input")
+		}
 		parts := strings.Split(input, " ")
 		if len(parts) != 2 {
 			fmt.Println("Invalid input. Please Enter in the format 'Name Amount'.")
@@ -54,7 +46,7 @@ func getPersonInput(prompt string) (string, float32) {
 			continue
 		}
 
-		return name, float32(amount)
+		return name, float32(amount), nil
 
 	}
 }
