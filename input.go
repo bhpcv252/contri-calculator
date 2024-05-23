@@ -28,15 +28,15 @@ func getFloatInput(prompt string) float32 {
 	}
 }
 
-func getPersonInput(prompt string) (string, float32, error) {
+func getPersonInput(prompt string, finalAmount float32) (string, float32, float32, error) {
 	for {
 		input := getInput(prompt)
 		if input == "" {
-			return "", 0, fmt.Errorf("end of input")
+			return "", 0, 0, fmt.Errorf("end of input")
 		}
 		parts := strings.Split(input, " ")
-		if len(parts) != 2 {
-			fmt.Println("Invalid input. Please Enter in the format 'Name Amount'.")
+		if len(parts) < 2 || len(parts) > 3 {
+			fmt.Println("Invalid input. Please Enter in the format 'Name Amount Afford'. Afford is optional")
 			continue
 		}
 		name := parts[0]
@@ -46,7 +46,19 @@ func getPersonInput(prompt string) (string, float32, error) {
 			continue
 		}
 
-		return name, float32(amount), nil
+		var afford float32
+		if len(parts) == 3 {
+			affordValue, err := strconv.ParseFloat(parts[2], 32)
+			if err != nil {
+				fmt.Println("Invalid input. Please enter a valid number for afford.")
+				continue
+			}
+			afford = float32(affordValue)
+		} else {
+			afford = finalAmount // Default value if afford is not provided.
+		}
+
+		return name, float32(amount), float32(afford), nil
 
 	}
 }
