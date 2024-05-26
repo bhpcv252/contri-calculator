@@ -16,7 +16,7 @@ func main() {
 	group := make([]*person.Person, 0)
 
 	fmt.Println("\n-----------------")
-	fmt.Println("Enter people's name, initial contribution and how much they can afford (optional): (example: John 20 50). Leave empty to finish.")
+	fmt.Println("Enter people's name, initial contribution (optional) and how much they can afford (optional): (example: John 20 50). Leave empty to finish.")
 
 	for {
 		name, amount, afford, err := getPersonInput("(Name Amount Afford): ")
