@@ -45,22 +45,31 @@ func getPersonInput(prompt string) (string, float32, float32, error) {
 		}
 		// Split the input by spaces
 		parts := strings.Split(input, " ")
-		// Check if the input has valid number of parts
-		if len(parts) < 2 || len(parts) > 3 {
-			fmt.Println("Invalid input. Please Enter in the format 'Name Amount Afford'. Afford is optional")
+		// Check if the input has a valid number of parts
+		if len(parts) < 1 || len(parts) > 3 {
+			fmt.Println("Invalid input. Please enter in the format 'Name [Amount] [Afford]'. Amount and Afford are optional.")
 			continue
 		}
 		// Extract name from the input
 		name := parts[0]
-		// Extract amount from the input and convert it to float32
-		amount, err := strconv.ParseFloat(parts[1], 32)
-		if err != nil {
-			fmt.Println("Invalid input. Please Enter enter a valid number.")
-			continue
+
+		// Initialize amount and afford variables
+		var amount float32
+		var afford float32
+
+		// If amount is provided in the input, extract it and convert it to float32
+		if len(parts) >= 2 {
+			amountValue, err := strconv.ParseFloat(parts[1], 32)
+			if err != nil {
+				fmt.Println("Invalid input. Please enter a valid number for amount.")
+				continue
+			}
+			amount = float32(amountValue)
+		} else {
+			// If amount is not provided, use the default value 0
+			amount = 0
 		}
 
-		// Initialize afford variable
-		var afford float32
 		// If affordability is provided in the input, extract it and convert it to float32
 		if len(parts) == 3 {
 			affordValue, err := strconv.ParseFloat(parts[2], 32)
@@ -70,12 +79,11 @@ func getPersonInput(prompt string) (string, float32, float32, error) {
 			}
 			afford = float32(affordValue)
 		} else {
-			// If affordability is not provided, use the default value finalAmount
+			// If affordability is not provided, use the default value -1
 			afford = -1
 		}
 
 		// Return name, amount, and affordability
-		return name, float32(amount), float32(afford), nil
-
+		return name, amount, afford, nil
 	}
 }
