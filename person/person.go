@@ -8,7 +8,8 @@ type Person struct {
 	Name                string
 	InitialContribution float32
 	HasToPay            float32
-	MaxAfford           float32
+	AffordLimit         float32
+	CanAfford           float32
 }
 
 func (p Person) String() string {
@@ -17,7 +18,7 @@ func (p Person) String() string {
 		return fmt.Sprintf("%s -> %.2f (Will collect)", p.Name, p.HasToPay)
 	}
 
-	if p.HasToPay+p.InitialContribution == p.MaxAfford {
+	if p.CanAfford == 0 {
 		// This person can only pay the maximum amount they can afford.
 		return fmt.Sprintf("%s -> %.2f (Max Afford)", p.Name, p.HasToPay)
 	}

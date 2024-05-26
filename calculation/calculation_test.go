@@ -6,94 +6,71 @@ import (
 	"github.com/bhpcv252/contri-calculator/person"
 )
 
-func TestAffordCount(t *testing.T) {
-	group := []person.Person{
-		{Name: "Sonu", InitialContribution: 20, HasToPay: 0, MaxAfford: 50},
-		{Name: "Bob", InitialContribution: 50, HasToPay: 0, MaxAfford: 50},
-		{Name: "Diana", InitialContribution: 200, HasToPay: 0, MaxAfford: 1000},
-		{Name: "Charlie", InitialContribution: 100, HasToPay: 0, MaxAfford: 150},
-	}
-	expected := 3
-	result := AffordCount(group)
-	if result != expected {
-		t.Errorf("Expected afford count to be %d but got %d", expected, result)
-	}
-}
-
-func TestCalculateContribution(t *testing.T) {
-	group := []person.Person{
-		{Name: "Alice", InitialContribution: 20},
-		{Name: "Bob", InitialContribution: 50},
-		{Name: "Diana", InitialContribution: 200},
-		{Name: "Charlie", InitialContribution: 100},
-	}
-	finalAmount := float32(1000)
-
-	expected := float32(float32(1000) / 4)
-
-	result := CalculateContribution(group, finalAmount)
-	if result != expected {
-		t.Errorf("Expected each contribution to be %.2f but got %.2f", expected, result)
-	}
-
-}
-
-func TestCalculateEachContribution(t *testing.T) {
-	finalAmount := float32(1000)
-
-	group := []person.Person{
-		{Name: "Alice", InitialContribution: 20, MaxAfford: 50},
-		{Name: "Bob", InitialContribution: 50, MaxAfford: 200},
-		{Name: "Diana", InitialContribution: 200, MaxAfford: finalAmount},
-		{Name: "Charlie", InitialContribution: 100, MaxAfford: 150},
-	}
-
-	expectedAmounts := []float32{30, 150, 400, 50}
-
-	CalculateEachContribution(group, finalAmount, true)
-
-	for i, person := range group {
-		if person.HasToPay != expectedAmounts[i] {
-			t.Errorf("Expected amount for %s to be %.2f but got %.2f", person.Name, expectedAmounts[i], person.HasToPay)
-		}
-	}
-}
-
-func TestCalculateEachContributionEdgeCases(t *testing.T) {
-	// Case with no persons in group
-	group := []person.Person{}
-	finalAmount := float32(1000)
-	expected := float32(0)
-	result := CalculateContribution(group, finalAmount)
-	if result != expected {
-		t.Errorf("Expected each contribution to be %.2f but got %.2f", expected, result)
+// TestAffordCount tests the AffordCount function to ensure it correctly counts
+// the number of people in a group who can afford to contribute.
+func TestCalculateContributions(t *testing.T) {
+	// Define test cases
+	testCases := []struct {
+		name             string
+		group            []*person.Person
+		finalAmount      float32
+		expectedPayments []float32
+	}{
+		{
+			name: "Equal InitialContribution",
+			group: []*person.Person{
+				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
+				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
+				{InitialContribution: 1000, CanAfford: 100, HasToPay: 0},
+				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
+			},
+			finalAmount:      1000,
+			expectedPayments: []float32{300, 300, -900, 300},
+		},
+		{
+			name: "Mixed InitialContribution and affordability",
+			group: []*person.Person{
+				{InitialContribution: 10, CanAfford: 50, HasToPay: 0},
+				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
+				{InitialContribution: 1000, CanAfford: 100, HasToPay: 0},
+				{InitialContribution: 100, CanAfford: -1, HasToPay: 0},
+			},
+			finalAmount:      400,
+			expectedPayments: []float32{40, 125, -900, 25},
+		},
+		{
+			name: "Maximum affordability constraints",
+			group: []*person.Person{
+				{InitialContribution: 100, CanAfford: 200, HasToPay: 0},
+				{InitialContribution: 200, CanAfford: 150, HasToPay: 0},
+				{InitialContribution: 300, CanAfford: 100, HasToPay: 0},
+				{InitialContribution: 400, CanAfford: 50, HasToPay: 0},
+			},
+			finalAmount:      2000,
+			expectedPayments: []float32{100, -50, -200, -350},
+		},
+		{
+			name: "Mixed complicated affordability constraints",
+			group: []*person.Person{
+				{InitialContribution: 10, CanAfford: 50, HasToPay: 0},
+				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
+				{InitialContribution: 1000, CanAfford: 110, HasToPay: 0},
+				{InitialContribution: 90, CanAfford: -1, HasToPay: 0},
+			},
+			finalAmount:      400,
+			expectedPayments: []float32{40, 120, -890, 30},
+		},
 	}
 
-	// Case with finalAmount <= 0
-	group = []person.Person{
-		{Name: "Alice", InitialContribution: 20, MaxAfford: 50},
-		{Name: "Bob", InitialContribution: 50, MaxAfford: 200},
-	}
-	finalAmount = float32(0)
-	expected = float32(0)
-	CalculateEachContribution(group, finalAmount, true)
-	for _, person := range group {
-		if person.HasToPay != expected {
-			t.Errorf("Expected each contribution to be %.2f but got %.2f", expected, person.HasToPay)
-		}
-	}
-
-	// Case where no one can afford to pay
-	group = []person.Person{
-		{Name: "Alice", InitialContribution: 50, MaxAfford: 50},
-		{Name: "Bob", InitialContribution: 200, MaxAfford: 200},
-	}
-	finalAmount = float32(1000)
-	expected = float32(0)
-	CalculateEachContribution(group, finalAmount, true)
-	for _, person := range group {
-		if person.HasToPay != expected {
-			t.Errorf("Expected each contribution to be %.2f but got %.2f", expected, person.HasToPay)
-		}
+	// Loop through test cases
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			CalculateContributions(tc.group, tc.finalAmount, 0)
+			for i, person := range tc.group {
+				if person.HasToPay != tc.expectedPayments[i] {
+					t.Errorf("%s failed: Expected HasToPay %.2f but got %.2f", tc.name, tc.expectedPayments[i], person.HasToPay)
+				}
+			}
+		})
 	}
 }
