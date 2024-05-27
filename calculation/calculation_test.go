@@ -17,7 +17,7 @@ func TestCalculateContributions(t *testing.T) {
 		expectedPayments []float32
 	}{
 		{
-			name: "Equal InitialContribution",
+			name: "One InitialContribution",
 			group: []*person.Person{
 				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
 				{InitialContribution: 0, CanAfford: -1, HasToPay: 0},
