@@ -14,7 +14,6 @@ make build
 ```
 The binary file will be available in the ```bin``` folder.
 
-
 ### Usage
 
 - Enter the final amount which was spent? 
@@ -26,7 +25,7 @@ The binary file will be available in the ```bin``` folder.
 ### Example
 
 ```
-Enter the final amount which was spent? : 1000
+Enter the final amount which was spent: 1000
 ```
 
 ```
