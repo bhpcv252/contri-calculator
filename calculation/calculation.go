@@ -33,6 +33,9 @@ func CalculateContributions(group []*person.Person, finalAmount float32, depth i
 			}
 			// Calculate the remaining amount to be distributed
 			remaining += equalShare - p.CanAfford
+
+			// Person can't afford any more amount
+			p.CanAfford = 0
 		}
 
 		// If the person can afford the equal share or has unlimited affordability
@@ -40,6 +43,9 @@ func CalculateContributions(group []*person.Person, finalAmount float32, depth i
 			p.HasToPay += equalShare
 			if p.CanAfford != -1 {
 				p.CanAfford -= equalShare
+				if p.CanAfford < 0 {
+					p.CanAfford = 0
+				}
 			}
 			if depth == 0 {
 				p.HasToPay -= p.InitialContribution
@@ -49,6 +55,6 @@ func CalculateContributions(group []*person.Person, finalAmount float32, depth i
 		}
 	}
 
-	// Recursively calculate the contribution for the next group
+	// Recursively calculate the contribution for the remaining amount
 	CalculateContributions(nextGroupIteration, remaining, depth+1)
 }

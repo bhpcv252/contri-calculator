@@ -2,5 +2,44 @@
 --------
 The Contribution Calculator is a simple tool designed to help groups split bills and expenses fairly.
 
-This project aims to develop a RESTful API that can be integrated with a frontend, providing a seamless experience for managing group contributions. Future enhancements will include additional features to further streamline the process.
+### How to Run the Project
+Execute the following command to run the project:
+```
+make run
+```
 
+To generate a binary file, run:
+```
+make build
+```
+The binary file will be available in the ```bin``` folder.
+
+
+### Usage
+
+- Enter the final amount which was spent? 
+- Enter User's information, or leave empty to finish
+  - Person's name
+  - Initial contribution, if any (optional)
+  - How much user can afford (optional)
+
+### Example
+
+```
+Enter the final amount which was spent? : 1000
+```
+
+```
+(Name Amount Afford): John 0 100
+(Name Amount Afford): Jane 200
+(Name Amount Afford): Dave
+(Name Amount Afford): Diana 350
+
+```
+##### Output 
+```
+John -> 100.00 (Max Affordability)
+Jane -> 100.00
+Dave -> 300.00
+Diana -> -50.00 (To be Collected)
+```

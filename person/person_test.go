@@ -15,12 +15,12 @@ func TestPersonString(t *testing.T) {
 		// Test case: Alice has a negative HasToPay indicating she will collect money
 		{
 			Person{Name: "Alice", InitialContribution: 50, HasToPay: -20, CanAfford: 100},
-			"Alice -> -20.00 (Will collect)",
+			"Alice -> -20.00 (To be Collected)",
 		},
 		// Test case: Bob has a positive HasToPay and zero CanAfford indicating maximum affordability
 		{
 			Person{Name: "Bob", InitialContribution: 30, HasToPay: 20, CanAfford: 0},
-			"Bob -> 20.00 (Max Afford)",
+			"Bob -> 20.00 (Max Affordability)",
 		},
 		// Test case: Charlie has a positive HasToPay and sufficient affordability
 		{
@@ -30,7 +30,7 @@ func TestPersonString(t *testing.T) {
 		// Test case: Diana has zero HasToPay and zero CanAfford indicating maximum affordability
 		{
 			Person{Name: "Diana", InitialContribution: 20, HasToPay: 0, CanAfford: 0},
-			"Diana -> 0.00 (Max Afford)",
+			"Diana -> 0.00 (Max Affordability)",
 		},
 		// Test case: Eve has a positive HasToPay and sufficient affordability
 		{
