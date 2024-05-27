@@ -11,7 +11,7 @@ import (
 func main() {
 
 	fmt.Println("\n-----------------")
-	finalAmount := getFloatInput("Enter the final amount which was spent? : ")
+	finalAmount := getFloatInput("Enter the final amount which was spent: ")
 
 	group := make([]*person.Person, 0)
 
