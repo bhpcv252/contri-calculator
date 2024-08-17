@@ -18,22 +18,6 @@ func getInput(prompt string) string {
 	return strings.TrimSpace(input)
 }
 
-// getFloatInput prompts the user for input and returns it as a float32.
-func getFloatInput(prompt string) float32 {
-	for {
-		// Get input from the user
-		input := getInput(prompt)
-		// Convert the input to a float32
-		value, err := strconv.ParseFloat(input, 32)
-		// If conversion is successful, return the value
-		if err == nil {
-			return float32(value)
-		}
-		// If conversion fails, prompt the user to enter a valid number
-		fmt.Println("Invalid input. Please Enter a valid number.")
-	}
-}
-
 // getPersonInput prompts the user to input person details and returns them.
 func getPersonInput(prompt string) (string, float32, float32, error) {
 	for {
