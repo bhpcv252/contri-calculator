@@ -16,7 +16,6 @@ The binary file will be available in the ```bin``` folder.
 
 ### Usage
 
-- Enter the final amount which was spent? 
 - Enter User's information, or leave empty to finish
   - Person's name
   - Amount paid, if any (optional)
