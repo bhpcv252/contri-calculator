@@ -19,20 +19,16 @@ The binary file will be available in the ```bin``` folder.
 - Enter the final amount which was spent? 
 - Enter User's information, or leave empty to finish
   - Person's name
-  - Initial contribution, if any (optional)
-  - How much user can afford (optional)
+  - Amount paid, if any (optional)
+  - Budget; how much user can afford (optional)
 
 ### Example
 
 ```
-Enter the final amount which was spent: 1000
-```
-
-```
-(Name Amount Afford): John 0 100
-(Name Amount Afford): Jane 200
-(Name Amount Afford): Dave
-(Name Amount Afford): Diana 350
+(Name Amount Budget): John 0 100
+(Name Amount Budget): Jane 200
+(Name Amount Budget): Dave
+(Name Amount Budget): Diana 350
 
 ```
 ##### Output 
