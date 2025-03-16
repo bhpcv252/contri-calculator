@@ -23,8 +23,8 @@ func main() {
 	group := make([]*person.Person, 0)
 
 	fmt.Println("\n-----------------")
-	fmt.Println(
-		"Enter person's name, amount paid (optional) and how much they can afford (optional).\nExample: John 20 50\nLeave empty to finish.\n",
+	fmt.Print(
+		"Enter person's name, amount paid (optional) and how much they can afford (optional).\nExample: John 20 50\nLeave empty to finish.\n\n",
 	)
 
 	for {
