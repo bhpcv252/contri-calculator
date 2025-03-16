@@ -3,19 +3,29 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/bhpcv252/contri-calculator/calculation"
 	"github.com/bhpcv252/contri-calculator/person"
 )
 
+var version = "dev" // default version
+
 func main() {
+	// Check if the first argument is either --version or -v
+	if len(os.Args) > 1 && (os.Args[1] == "--version" || os.Args[1] == "-v") {
+		fmt.Printf("Contri version: %s\n", version)
+		return
+	}
 
 	finalAmount := float32(0)
 
 	group := make([]*person.Person, 0)
 
 	fmt.Println("\n-----------------")
-	fmt.Println("Enter person's name, amount paid (optional) and how much they can afford (optional): (example: John 20 50). Leave empty to finish.")
+	fmt.Print(
+		"Enter person's name, amount paid (optional) and how much they can afford (optional).\nExample: John 20 50\nLeave empty to finish.\n\n",
+	)
 
 	for {
 		name, amount, afford, err := getPersonInput("(Name Paid Budget): ")
@@ -23,7 +33,15 @@ func main() {
 			break
 		}
 		finalAmount += amount
-		group = append(group, &person.Person{Name: name, InitialContribution: amount, AffordLimit: afford, CanAfford: afford})
+		group = append(
+			group,
+			&person.Person{
+				Name:                name,
+				InitialContribution: amount,
+				AffordLimit:         afford,
+				CanAfford:           afford,
+			},
+		)
 	}
 
 	if len(group) == 0 {
@@ -39,5 +57,4 @@ func main() {
 	for _, p := range group {
 		fmt.Println(p)
 	}
-
 }

@@ -1,8 +1,8 @@
 build:
-	@go build -o bin/contri-calculator
+	@go build -o contri . 
 
 run: build
-	@./bin/contri-calculator
+	@./contri
 
 test:
 	@go test -v ./...
