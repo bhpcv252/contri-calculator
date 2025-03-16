@@ -5,27 +5,28 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.22.x'
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.x"
 
-    - name: Install dependencies
-      run: go get .
+      - name: Install dependencies
+        run: |
+          cd cmd/contri
+          go get .
 
-    - name: Build
-      run: go build -v ./...
+      - name: Build
+        run: go build -v ./cmd/contri
 
-    - name: Test
-      run: go test -v ./...
+      - name: Test
+        run: go test -v ./...

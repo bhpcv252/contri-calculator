@@ -24,7 +24,7 @@ Before using `go install`, you need to have Go installed on your system. If you 
 Once Go is installed, you can use the following command to install the Contri Calculator globally:
 
 ```bash
-go install github.com/bhpcv252/contri-calculator@latest
+go install github.com/bhpcv252/contri-calculator/cmd/contri@latest
 ```
 
 #### 3. **Download the Binary (Optional)**
