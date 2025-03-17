@@ -2,7 +2,7 @@
 
 ---
 
-![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)
+![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg) ![Build Status](https://github.com/bhpcv252/contri-calculator/workflows/Build%20and%20Tests/badge.svg)
 
 It is a simple tool designed to help groups split bills and expenses fairly.
 
