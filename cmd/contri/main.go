@@ -9,7 +9,7 @@ import (
 	"github.com/bhpcv252/contri-calculator/person"
 )
 
-var version = "dev" // default version
+var version = "v0.1.4" // current version
 
 func main() {
 	// Check if the first argument is either --version or -v

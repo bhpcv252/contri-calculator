@@ -2,6 +2,8 @@
 
 ---
 
+![License](https://img.shields.io/badge/license-GPL%20v3-blue.svg)
+
 It is a simple tool designed to help groups split bills and expenses fairly.
 
 ### Table of Contents
